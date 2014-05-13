@@ -42,13 +42,23 @@ namespace BikeProxy.Api.Models
         {
             return new Station() { 
                 id = number,
-                stationName = name,
+                stationName = FilterName(name),
                 stAddress1 = address,
                 latitude = position.lat,
                 longitude = position.lng,
                 availableBikes = available_bikes,
                 availableDocks = available_bike_stands
             };
+        }
+
+        private string FilterName(string name)
+        {
+            if (name.Contains(" - "))
+            {
+                var parts = name.Split(new[] {" - " }, StringSplitOptions.None);
+                return string.Concat(parts.Skip(1));
+            }
+            return name;
         }
     }
 
